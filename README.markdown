@@ -35,7 +35,7 @@ You can of course setup the mongoDb connection if the default "localhost" config
 Document Manager's config
 
     // proxies and hydrators
-    resources.eodm.configuration.proxyNamespace = "Proxies"
+    resources.odm.configuration.proxyNamespace = "Proxies"
     resources.odm.configuration.proxyDir = "/path/to/proxies"
     resources.odm.configuration.autoGenerateProxyClasses = 0
     resources.odm.configuration.hydratorNamespace = "Hydrators"
@@ -45,30 +45,30 @@ Document Manager's config
 Mapping drivers (optional, annotation by default)
 
     //annotation driver
-    resources.doctrineodm.configuration.metadataDriverImpl.type = "annotation"
-    resources.doctrineodm.configuration.metadataDriverImpl.readerParams.defaultAnnotationNamespace = "Doctrine\ODM\MongoDB\Mapping\"
-    resources.doctrineodm.configuration.metadataDriverImpl.path.1 = "/path/to/documents"
-    resources.doctrineodm.configuration.metadataDriverImpl.path.2 = "/other/path/to/documents"
+    resources.odm.configuration.metadataDriverImpl.type = "annotation"
+    resources.odm.configuration.metadataDriverImpl.readerParams.defaultAnnotationNamespace = "Doctrine\ODM\MongoDB\Mapping\"
+    resources.odm.configuration.metadataDriverImpl.path.1 = "/path/to/documents"
+    resources.odm.configuration.metadataDriverImpl.path.2 = "/other/path/to/documents"
 
     //xml or yaml:
-    resources.doctrineodm.configuration.metadataDriverImpl.type = "xml" //or yaml
-    resources.doctrineodm.configuration.metadataDriverImpl.path.1 = "/path/to/mappings"
-    resources.doctrineodm.configuration.metadataDriverImpl.path.2 = "/other/path/to/mappings"
-    resources.doctrineodm.configuration.metadataDriverImpl.param.fileExtension = ".my.extension" //if you want to overrid defaults
+    resources.odm.configuration.metadataDriverImpl.type = "xml" //or yaml
+    resources.odm.configuration.metadataDriverImpl.path.1 = "/path/to/mappings"
+    resources.odm.configuration.metadataDriverImpl.path.2 = "/other/path/to/mappings"
+    resources.odm.configuration.metadataDriverImpl.param.fileExtension = ".my.extension" //if you want to overrid defaults
 
     //driver chain
-    resources.doctrineodm.configuration.metadataDriverImpl.type = "chain"
-    resources.doctrineodm.configuration.metadataDriverImpl.drivers.my_namespace.type = //one of the above drivers types
-    resources.doctrineodm.configuration.metadataDriverImpl.drivers.my_namespace.path = //just configure it as you would do it above
-    ;resources.doctrineodm.configuration.metadataDriverImpl.drivers.my_second_namespace.type = //and add other drivers...
-    ;resources.doctrineodm.configuration.metadataDriverImpl.drivers.my_second_namespace.path = ...
+    resources.odm.configuration.metadataDriverImpl.type = "chain"
+    resources.odm.configuration.metadataDriverImpl.drivers.my_namespace.type = //one of the above drivers types
+    resources.odm.configuration.metadataDriverImpl.drivers.my_namespace.path = //just configure it as you would do it above
+    ;resources.odm.configuration.metadataDriverImpl.drivers.my_second_namespace.type = //and add other drivers...
+    ;resources.odm.configuration.metadataDriverImpl.drivers.my_second_namespace.path = ...
 
     //optional class metadata factory's name override
-    resources.doctrineodm.configuration.classMetadataFactoryName  = "MyOwnMetadataFactory"//optional
+    resources.odm.configuration.classMetadataFactoryName  = "MyOwnMetadataFactory"//optional
 
 Database naming settings (optional)
 
-    resources.doctrineodm.configuration.defaultDB = "myDefaultDB"
+    resources.odm.configuration.defaultDB = "myDefaultDB"
 
 Metadata Caching
 
@@ -78,11 +78,11 @@ Metadata Caching
     --other frontend options and backend options--
 
     //and just add this line to your doctrine config
-    resources.doctrineodm.configuration.metadataCacheImpl = "myMetadataCacheName"
+    resources.odm.configuration.metadataCacheImpl = "myMetadataCacheName"
 
     //or you can build directly your own instance :
-    resources.doctrineodm.configuration.metadataCacheImpl.frontend.name = "Axiomes_Cache_DoctrineCompatible"
-    resources.doctrineodm.configuration.metadataCacheImpl.customBackendNaming = true
+    resources.odm.configuration.metadataCacheImpl.frontend.name = "Axiomes_Cache_DoctrineCompatible"
+    resources.odm.configuration.metadataCacheImpl.customBackendNaming = true
     --other frontend options and backend options--
 
 
