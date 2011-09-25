@@ -1,48 +1,49 @@
 <?php
 namespace Axiomes\Auth\Adapter;
-use \Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 class Odm implements \Zend_Auth_Adapter_Interface
 {
 
     /**
+     * $_className - user document's class name
      * @var string
      */
-    protected $_className;
+    protected $_documentClassName;
 
     /**
      * $_identityField - the field to use as the identity
      *
      * @var string
      */
-    protected $_identityField = null;
+    protected $_identityField = 'username';
 
     /**
      * @var string
      */
-    protected $_identityValue = null;
+    protected $_identityValue;
 
     /**
      * $_credentialField - field to be used as the credentials
      *
      * @var string
      */
-    protected $_credentialField = null;
+    protected $_credentialField = 'password';
 
     /**
      * @var string
      */
-    protected $_credentialValue = null;
+    protected $_credentialValue;
 
     /**
      * @var \Doctrine\ODM\MongoDB\DocumentManager
      */
-    protected $_documentManager = null;
+    protected $_documentManager;
 
     /**
      * @var mixed
      */
-    protected $_credentialTreatment = null;
+    protected $_credentialTreatment;
 
     /**
      * Performs an authentication attempt
@@ -52,11 +53,11 @@ class Odm implements \Zend_Auth_Adapter_Interface
      */
     public function authenticate()
     {
-        if ($this->_credentialTreatment) {
+        if (is_callable($this->_credentialTreatment)) {
             $this->_credentialValue = call_user_func($this->_credentialTreatment, $this->_credentialValue);
         }
         $user = $this->_documentManager
-                ->getRepository($this->_className)
+                ->getRepository($this->_documentClassName)
                 ->createQueryBuilder()
                 ->field($this->_identityField)->equals($this->_identityValue)
                 ->field($this->_credentialField)->equals($this->_credentialValue)
@@ -74,9 +75,9 @@ class Odm implements \Zend_Auth_Adapter_Interface
     /**
      * @return string
      */
-    public function getClassName()
+    public function getDocumentClassName()
     {
-        return $this->_className;
+        return $this->_documentClassName;
     }
 
     /**
@@ -85,7 +86,7 @@ class Odm implements \Zend_Auth_Adapter_Interface
      */
     public function setClassName($className)
     {
-        $this->_className = $className;
+        $this->_documentClassName = $className;
         return $this;
     }
 
@@ -188,15 +189,14 @@ class Odm implements \Zend_Auth_Adapter_Interface
     }
 
     /**
-     * @param mixed $credentialTreatment
+     * @param callback $credentialTreatment
      * @return Odm
      */
     public function setCredentialTreatment($credentialTreatment)
     {
         if(is_callable($credentialTreatment)) {
             $this->_credentialTreatment = $credentialTreatment;
-        }
-        else {
+        } else {
             throw new \Zend_Auth_Adapter_Exception($credentialTreatment . ' is not a valid callback !');
         }
         return $this;

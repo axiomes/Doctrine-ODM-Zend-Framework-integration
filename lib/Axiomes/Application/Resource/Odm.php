@@ -1,12 +1,11 @@
 <?php
-/**
- * 
- */
+
 namespace Axiomes\Application\Resource;
 use Doctrine\MongoDB\Connection,
     Doctrine\ODM\MongoDB\Configuration,
     Doctrine\ODM\MongoDB\Mapping\Driver,
     Doctrine\ODM\MongoDB\DocumentManager;
+
 class Odm extends \Zend_Application_Resource_ResourceAbstract{
 
     /**
@@ -53,7 +52,7 @@ class Odm extends \Zend_Application_Resource_ResourceAbstract{
         $zendLoader->pushAutoloader(array($HydratorAutoloader, 'loadClass'),$configuration->getHydratorNamespace());
 
         $this->_documentManager = DocumentManager::create($connection, $configuration, new \Doctrine\Common\EventManager());
-        \Zend_Registry::set('doctrineOdm', $this->_documentManager);
+        \Zend_Registry::set('odm', $this->_documentManager);
         return $this->_documentManager;
     }
 

@@ -5,11 +5,13 @@ Use Doctrine ODM beta 3 right now in Zend Framework
 ## Features
 ### What it does
 
-- Uses a fully configurable Zend_Application resource plugin
-- Uses Zend Framework autoloader instead of Doctrine's
-- Caching via a Zend Cache Core extension instead of Doctrine's cache, you can use your usual backends
-- You can use a cache defined in Zend App's CacheManager resource plugin
-- Works with models dispatched in modules (if you use the Annotation driver for mapping description)
+- Provides Doctrine's ODM via a fully configurable Zend_Application resource plugin
+- Provides a Zend_Auth adapter
+- Provides a Zend_Paginator adapter
+- Caching via a Zend Cache Core instead of Doctrine's cache, you can use your usual backends
+- You can define caching in Zend App's CacheManager resource plugin
+- Works with models dispatched in modules
+
 
 ### What it doesn't (yet)
 
@@ -25,6 +27,7 @@ Don't forget to add pluginpath(s) and lib autoloading before resources definitio
     autoloadernamespaces[] = "Axiomes"
     autoloadernamespaces[] = "Doctrine"
     autoloadernamespaces[] = "Symfony"
+    // you could of course use your own auto-loading strategy
 
 You can of course setup the mongoDb connection if the default "localhost" config doesn't suit your needs
 
@@ -54,7 +57,7 @@ Mapping drivers
     resources.odm.configuration.metadataDriverImpl.type = "xml" //or yaml
     resources.odm.configuration.metadataDriverImpl.path.1 = "/path/to/mappings"
     resources.odm.configuration.metadataDriverImpl.path.2 = "/other/path/to/mappings"
-    resources.odm.configuration.metadataDriverImpl.param.fileExtension = ".my.extension" //if you want to overrid defaults
+    resources.odm.configuration.metadataDriverImpl.param.fileExtension = ".my.extension" //if you want to override defaults
 
     //driver chain
     resources.odm.configuration.metadataDriverImpl.type = "chain"
@@ -84,6 +87,31 @@ Metadata Caching
     resources.odm.configuration.metadataCacheImpl.frontend.name = "Axiomes_Cache_DoctrineCompatible"
     resources.odm.configuration.metadataCacheImpl.customBackendNaming = true
     --other frontend options and backend options--
+
+
+## Zend_Paginator adapter usage exemple
+
+    // you need a QueryBuilder instance
+    $qb = $documentManager->getRepository('ExempleDocument')
+            ->createQueryBuilder()
+            ->field('someField')->equals($someValue) //build your quety params if needed
+            ->sort('someOtherField','asc');
+
+    $adapter = new \Axiomes\Paginator\Adapter\Odm($qb);
+    $paginator = new \Zend_Paginator($adapter);
+
+## Zend_Auth adapter usage exemple
+
+   $adapter = new \Axiomes\Auth\Adapter\Odm();
+   $adapter->setDocumentManager($documentManager)
+        ->setDocumentClassName('User')
+        ->setIdentityField('username') //default value
+        ->setCredentialField('password') //default value
+        ->setCredentialTreatment('md5') //optional, callback function
+        ->setIdentityValue($login)
+        ->setCredentialValue($rawPassword);
+
+   $result = \Zend_Auth::getInstance()->authenticate($adapter);
 
 
 ## Hint for custom documents/repositories paths in modules

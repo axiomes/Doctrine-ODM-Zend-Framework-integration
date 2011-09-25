@@ -1,7 +1,7 @@
 <?php
 
 namespace Axiomes\Paginator\Adapter;
-use Doctrine\MongoDB\Query\Builder;
+use Doctrine\ODM\MongoDB\Query\Builder;
 
 class Odm implements \Zend_Paginator_Adapter_Interface{
 
@@ -11,15 +11,25 @@ class Odm implements \Zend_Paginator_Adapter_Interface{
     protected $qb;
 
     /**
+     * internal result's count cache
      * @var int
      */
     protected $count;
 
     /**
-     * @param \Doctrine\MongoDB\Query\Builder $qb
+     * @param \Doctrine\ODM\MongoDB\Query\Builder $qb
      */
-    public function __construct(Builder $qb){
+    public function __construct(Builder $qb = null){
         $this->qb = $qb;
+    }
+
+    /**
+     * @param \Doctrine\ODM\MongoDB\Query\Builder|null $qb
+     * @return \Axiomes\Paginator\Adapter\Odm
+     */
+    public function setQueryBuilder(Builder $qb = null){
+        $this->qb = $qb;
+        return $this;
     }
     
     /**
