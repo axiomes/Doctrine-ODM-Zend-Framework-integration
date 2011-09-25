@@ -92,7 +92,7 @@ Metadata Caching
 ## Zend_Paginator adapter usage exemple
 
     // you need a QueryBuilder instance
-    $qb = $documentManager->getRepository('ExempleDocument')
+    $qb = $documentManager->getRepository('ExampleDocument')
             ->createQueryBuilder()
             ->field('someField')->equals($someValue) //build your quety params if needed
             ->sort('someOtherField','asc');
