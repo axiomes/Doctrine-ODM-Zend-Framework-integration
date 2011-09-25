@@ -42,13 +42,13 @@ Document Manager's config
     resources.odm.configuration.hydratorDir = "/path/to/proxies"
     resources.odm.configuration.autoGenerateHydratorClasses = 0
 
-Mapping drivers (optional, annotation by default)
+Mapping drivers
 
     //annotation driver
     resources.odm.configuration.metadataDriverImpl.type = "annotation"
     resources.odm.configuration.metadataDriverImpl.readerParams.defaultAnnotationNamespace = "Doctrine\ODM\MongoDB\Mapping\"
-    resources.odm.configuration.metadataDriverImpl.path.1 = "/path/to/documents"
-    resources.odm.configuration.metadataDriverImpl.path.2 = "/other/path/to/documents"
+    resources.odm.configuration.metadataDriverImpl.path.1 = "/path/to/documents" //optional
+    resources.odm.configuration.metadataDriverImpl.path.2 = "/other/path/to/documents" //optional
 
     //xml or yaml:
     resources.odm.configuration.metadataDriverImpl.type = "xml" //or yaml
