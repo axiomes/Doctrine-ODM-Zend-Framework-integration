@@ -176,7 +176,10 @@ class Odm implements \Zend_Auth_Adapter_Interface
      */
     public function setCredentialValue($credentialValue)
     {
-        $this->_credentialValue = $credentialValue;
+        if($this->_credentialTreatment){
+			$credentialValue = call_user_func($this->_credentialTreatment, $credentialValue);
+		}
+		$this->_credentialValue = $credentialValue;
         return $this;
     }
 
