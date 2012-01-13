@@ -53,4 +53,25 @@ class Axiomes_Cache_DoctrineCompatible extends \Zend_Cache_Core implements \Doct
     protected function _cleanCacheId($key){
         return preg_replace('/[^a-zA-Z0-9_]/','_', $key);
     }
+
+	/**
+	 * Retrieves cached information from data store
+	 * The server's statistics array has the following values:
+	 * - <b>hits</b>
+	 * Number of keys that have been requested and found present.
+	 * - <b>misses</b>
+	 * Number of items that have been requested and not found.
+	 * - <b>uptime</b>
+	 * Time that the server is running.
+	 * - <b>memory_usage</b>
+	 * Memory used by this server to store items.
+	 * - <b>memory_available</b>
+	 * Memory allowed to use for storage.
+	 *
+	 * @since   2.2
+	 * @return array|null  Associative array with server's statistics if available, NULL otherwise.
+	 */
+	function getStats(){
+		return null;
+	}
 }
