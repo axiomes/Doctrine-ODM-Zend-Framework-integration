@@ -20,7 +20,7 @@ Use Doctrine ODM beta 3 right now in Zend Framework
 
 ## Configuration in application.ini:
 
-### add pluginpath(s) and lib autoloading before resources definition
+### Add pluginpath(s) and lib autoloading before resources definition
 
     pluginpaths.Axiomes\Application\Resource\ = APPLICATION_PATH "/../library/Axiomes/Application/Resource/"
 
@@ -30,10 +30,8 @@ Use Doctrine ODM beta 3 right now in Zend Framework
     autoloadernamespaces[] = "Doctrine"
     autoloadernamespaces[] = "Symfony"
 
-    // if you have a more complex vendor libraries layout,
-    // check out [Doctrine-Common-For-Zend-Framework](https://github.com/axiomes/Doctrine-Common-For-Zend-Framework), wich provides an
-    // easy way to solve class loading issues via Doctrine\Common\ClassLoader :
-    //
+If you have a more complex vendor libraries layout, check out [Doctrine-Common-For-Zend-Framework](https://github.com/axiomes/Doctrine-Common-For-Zend-Framework), wich provides an easy way to solve class loading issues via Doctrine\Common\ClassLoader :
+
     // resources.doctrineloader.classLoaderPath = LIBRARY_PATH "/vendor/doctrine-common/lib/Doctrine/Common/ClassLoader.php"
     // resources.doctrineloader.namespaces.Doctrine\MongoDB = LIBRARY_PATH "/vendor/doctrine-mongodb/lib"
 
@@ -51,7 +49,7 @@ If the default "localhost" config doesn't suit your needs:
     resources.odm.configuration.proxyDir = "/path/to/proxies"
     resources.odm.configuration.autoGenerateProxyClasses = 0
     resources.odm.configuration.hydratorNamespace = "Hydrators"
-    resources.odm.configuration.hydratorDir = "/path/to/proxies"
+    resources.odm.configuration.hydratorDir = "/path/to/hydrators"
     resources.odm.configuration.autoGenerateHydratorClasses = 0
 
 ### Mapping drivers
