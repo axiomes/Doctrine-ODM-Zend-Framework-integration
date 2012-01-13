@@ -102,16 +102,16 @@ Metadata Caching
 
 ## Zend_Auth adapter usage exemple
 
-   $adapter = new \Axiomes\Auth\Adapter\Odm();
-   $adapter->setDocumentManager($documentManager)
-        ->setDocumentClassName('User')
-        ->setIdentityField('username') //default value
+	$adapter = new \Axiomes\Auth\Adapter\Odm();
+	$adapter->setDocumentManager($documentManager)
+    	->setDocumentClassName('User')
+    	->setIdentityField('username') //default value
         ->setCredentialField('password') //default value
         ->setCredentialTreatment('md5') //optional, callback function
         ->setIdentityValue($login)
         ->setCredentialValue($rawPassword);
 
-   $result = \Zend_Auth::getInstance()->authenticate($adapter);
+	$result = \Zend_Auth::getInstance()->authenticate($adapter);
 
 
 ## Hint for custom documents/repositories paths in modules

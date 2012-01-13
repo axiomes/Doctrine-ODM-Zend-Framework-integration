@@ -8,27 +8,27 @@ class Odm implements \Zend_Paginator_Adapter_Interface{
     /**
      * @var \Doctrine\MongoDB\Query\Builder
      */
-    protected $qb;
+    protected $_qb;
 
     /**
      * internal result's count cache
      * @var int
      */
-    protected $count;
+    protected $_count;
 
     /**
      * @param \Doctrine\ODM\MongoDB\Query\Builder $qb
      */
     public function __construct(Builder $qb = null){
-        $this->qb = $qb;
+        $this->_qb = $qb;
     }
 
     /**
      * @param \Doctrine\ODM\MongoDB\Query\Builder|null $qb
      * @return \Axiomes\Paginator\Adapter\Odm
      */
-    public function setQueryBuilder(Builder $qb = null){
-        $this->qb = $qb;
+    public function setQueryBuilder(Builder $qb){
+        $this->_qb = $qb;
         return $this;
     }
     
@@ -41,7 +41,7 @@ class Odm implements \Zend_Paginator_Adapter_Interface{
      */
     public function getItems($offset, $itemCountPerPage)
     {
-        return $this->qb->skip($offset)->limit($itemCountPerPage)->getQuery()->getIterator();
+        return $this->_qb->skip($offset)->limit($itemCountPerPage)->getQuery()->getIterator();
     }
 
     /**
@@ -55,7 +55,9 @@ class Odm implements \Zend_Paginator_Adapter_Interface{
      */
     public function count()
     {
-        if(is_null($this->count)) $this->count = $this->qb->getQuery()->count();
-        return $this->count;
+        if(is_null($this->_count)){
+			$this->_count = $this->_qb->getQuery()->count();
+		}
+        return $this->_count;
     }
 }
