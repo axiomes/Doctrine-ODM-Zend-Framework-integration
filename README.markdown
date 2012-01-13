@@ -8,8 +8,8 @@ Use Doctrine ODM beta 3 right now in Zend Framework
 - Provides Doctrine's ODM via a fully configurable Zend_Application resource plugin
 - Provides a Zend_Auth adapter
 - Provides a Zend_Paginator adapter
-- Caching via a Zend Cache Core instead of Doctrine's cache, you can use your usual backends
-- You can define caching in Zend App's CacheManager resource plugin
+- Caching via a Zend_Cache_Core instead of Doctrine's cache, you can use your usual backends
+- You can define caching in Zend_Application's CacheManager resource plugin
 - Works with models dispatched in modules
 
 
@@ -20,22 +20,31 @@ Use Doctrine ODM beta 3 right now in Zend Framework
 
 ## Configuration in application.ini:
 
-Don't forget to add pluginpath(s) and lib autoloading before resources definition
+### add pluginpath(s) and lib autoloading before resources definition
 
     pluginpaths.Axiomes\Application\Resource\ = APPLICATION_PATH "/../library/Axiomes/Application/Resource/"
 
     autoloadernamespaces[] = "Axiomes"
+
+    // if your Doctrine source is directly in include path
     autoloadernamespaces[] = "Doctrine"
     autoloadernamespaces[] = "Symfony"
-    // you could of course use your own auto-loading strategy
 
-You can of course setup the mongoDb connection if the default "localhost" config doesn't suit your needs
+    // if you have a more complex vendor libraries layout,
+    // check out [Doctrine-Common-For-Zend-Framework](https://github.com/axiomes/Doctrine-Common-For-Zend-Framework), wich provides an
+    // easy way to solve class loading issues via Doctrine\Common\ClassLoader :
+    //
+    // resources.doctrineloader.classLoaderPath = LIBRARY_PATH "/vendor/doctrine-common/lib/Doctrine/Common/ClassLoader.php"
+    // resources.doctrineloader.namespaces.Doctrine\MongoDB = LIBRARY_PATH "/vendor/doctrine-mongodb/lib"
+
+### Setup the mongoDb connection (optional)
+If the default "localhost" config doesn't suit your needs:
 
     resources.odm.connection.server = ..
     resources.odm.connection.options.connect = false
     --other options are explained on php.net's MongoDB documentation ---
 
-Document Manager's config
+### Document Manager's config
 
     // proxies and hydrators
     resources.odm.configuration.proxyNamespace = "Proxies"
@@ -45,7 +54,7 @@ Document Manager's config
     resources.odm.configuration.hydratorDir = "/path/to/proxies"
     resources.odm.configuration.autoGenerateHydratorClasses = 0
 
-Mapping drivers
+### Mapping drivers
 
     //annotation driver
     resources.odm.configuration.metadataDriverImpl.type = "annotation"
@@ -69,11 +78,12 @@ Mapping drivers
     //optional class metadata factory's name override
     resources.odm.configuration.classMetadataFactoryName  = "MyOwnMetadataFactory"//optional
 
-Database naming settings (optional)
+### Database naming settings (optional)
 
     resources.odm.configuration.defaultDB = "myDefaultDB"
 
-Metadata Caching
+### Metadata Caching
+The "Axiomes_Cache_DoctrineCompatible" class mentioned here can be found in the [Doctrine-Common-For-Zend-Framework](https://github.com/axiomes/Doctrine-Common-For-Zend-Framework) repository
 
     //if you use the CacheManager resource plugin, add a Doctrine Compatible cache :
     resources.cacheManager.myMetadataCacheName.frontend.name = "Axiomes_Cache_DoctrineCompatible"
@@ -94,7 +104,7 @@ Metadata Caching
     // you need a QueryBuilder instance
     $qb = $documentManager->getRepository('ExampleDocument')
             ->createQueryBuilder()
-            ->field('someField')->equals($someValue) //build your quety params if needed
+            ->field('someField')->equals($someValue) //build your query params if needed
             ->sort('someOtherField','asc');
 
     $adapter = new \Axiomes\Paginator\Adapter\Odm($qb);
